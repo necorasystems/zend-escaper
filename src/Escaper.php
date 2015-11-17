@@ -155,7 +155,7 @@ class Escaper
     public function escapeHtmlAttr($string)
     {
         $string = $this->toUtf8($string);
-        if ($string === '' || ctype_digit($string)) {
+        if (null === $string || $string === '' || ctype_digit($string)) {
             return $string;
         }
 
@@ -178,7 +178,7 @@ class Escaper
     public function escapeJs($string)
     {
         $string = $this->toUtf8($string);
-        if ($string === '' || ctype_digit($string)) {
+        if (null === $string || $string === '' || ctype_digit($string)) {
             return $string;
         }
 
@@ -209,7 +209,7 @@ class Escaper
     public function escapeCss($string)
     {
         $string = $this->toUtf8($string);
-        if ($string === '' || ctype_digit($string)) {
+        if (null === $string || $string === '' || ctype_digit($string)) {
             return $string;
         }
 
@@ -347,7 +347,7 @@ class Escaper
      */
     protected function isUtf8($string)
     {
-        return ($string === '' || preg_match('/^./su', $string));
+        return (null === $string || $string === '' || preg_match('/^./su', $string));
     }
 
     /**
@@ -362,6 +362,10 @@ class Escaper
      */
     protected function convertEncoding($string, $to, $from)
     {
+        if (null === $string) {
+            return $string;
+        }
+
         if (function_exists('iconv')) {
             $result = iconv($from, $to, $string);
         } elseif (function_exists('mb_convert_encoding')) {

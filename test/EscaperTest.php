@@ -390,4 +390,10 @@ class EscaperTest extends \PHPUnit_Framework_TestCase
             }
         }
     }
+
+    public function testHtmlAttributeEscapingNull()
+    {
+        $str = null;
+        $this->assertEquals($str, $this->escaper->escapeHtmlAttr($str));
+    }
 }
